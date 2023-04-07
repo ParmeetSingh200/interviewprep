@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "572328909217",
+    "project_id": "interviewprep-d69e6",
+    "storage_bucket": "interviewprep-d69e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572328909217:android:2e58b6cb457c6873ac13e0",
+        "android_client_info": {
+          "package_name": "com.example.interviewprep"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "572328909217-sqmikrvfalpiiqbk4qqe631maav6ajo5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.interviewprep",
+            "certificate_hash": "1512142b36ae42f69cade53b3d1a1b2f9cb011e5"
+          }
+        },
+        {
+          "client_id": "572328909217-ppgjef915cesr4d252dsevh88cho7mgv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoYKch9rqEPlFT4kx75Q_zO9MfwcJ6tuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "572328909217-ppgjef915cesr4d252dsevh88cho7mgv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
