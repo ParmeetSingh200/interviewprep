@@ -1,127 +1,109 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:interviewprep/textfieldexample.dart';
+import 'package:flutter/services.dart';
 
-import 'demopage.dart';
-import 'emaillink2.dart';
-import 'googlesignin.dart';
-import 'imageincircle.dart';
-import 'login.dart';
-import 'loginscreenforphone.dart';
-import 'emaillink.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MyApp());
+void main() {
+  runApp(MaterialApp(
+    home: MyApp(),
+  ));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: LoginPage(),
+  _State createState() => _State();
+}
+
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    return TextEditingValue(
+      text: capitalize(newValue.text),
+      selection: newValue.selection,
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
+String capitalize(String value) {
+  if (value.trim().isEmpty) return "";
+  return "${value[0].toUpperCase()}${value.substring(1).toLowerCase()}";
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
+class _State extends State<MyApp> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+        appBar: AppBar(
+          title: Text('Flutter TextField Example'),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        body: Padding(
+            padding: EdgeInsets.all(15),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(15),
+                  child: TextField(
+                    // textCapitalization: TextCapitalization.words,
+                    inputFormatters: [
+                      // UpperCaseTextFormatter(),
+                      UpperCaseTextFormatter(),
+                      FilteringTextInputFormatter.allow(RegExp('[a-z A-Z]')),
+                    ],
+                    controller: nameController,
+                    style: TextStyle(color: Colors.blue),
+                    // textCapitalization: TextCapitalization.sentences,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      // labelText: 'User Name',
+                      // labelStyle: TextStyle(color: Colors.pink, fontSize: 20),
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      hintText: 'Enter Your Name',
+                      // hintStyle: TextStyle(
+                      //     color: Colors.green, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(15),
+                  child: TextField(
+                    // textCapitalization: TextCapitalization.sentences,
+                    style: TextStyle(color: Colors.blue),
+                    controller: passwordController,
+                    // obscureText: true,
+                    decoration: InputDecoration(
+                      //  ,.fillColor: Colors.red,
+                      // filled: true,
+                      // floatingLabelBehavior: FloatingLabelBehavior.never,
+                      border: OutlineInputBorder(),
+                      labelText: 'Password',
+                      labelStyle: TextStyle(color: Colors.pink, fontSize: 20),
+                      hintText: 'Enter Password',
+                      hintStyle: TextStyle(
+                          color: Colors.green, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                FloatingActionButton(
+                  // When the user presses the button, show an alert dialog containing
+                  // the text that the user has entered into the text field.
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Hello"),
+                          // Retrieve the text the that user has entered by using the
+                          // TextEditingController.
+                          content: Text(nameController.text),
+                        );
+                      },
+                    );
+                  },
+                  tooltip: 'Show me the value!',
+                  child: const Icon(Icons.text_fields),
+                ),
+              ],
+            )));
   }
 }
